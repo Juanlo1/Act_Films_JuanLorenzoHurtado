@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= film.Title || film.title %> - Resultados de Google</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  
+  <header class="top-header">
+    <a href="/" class="top-logo">
+      <span class="g-blue">G</span>
+      <span class="g-red">o</span>
+      <span class="g-yellow">o</span>
+      <span class="g-blue">g</span>
+      <span class="g-green">l</span>
+      <span class="g-red">e</span>
+    </a>
+    <form action="/search" method="GET">
+      <div class="input-container">
+        <input type="text" name="pelis" value="<%= query %>" required>
+      </div>
+    </form>
+  </header>
+
+  <main class="results-container">
+    
+    <h1 class="film-title"><%= film.Title || film.title %></h1>
+
+    
+    <p class="film-year">Año: <%= film.Year || film.year %></p>
+
+    
+    <p class="film-plot"><strong>Trama:</strong> <%= film.Plot || film.plot %></p>
+
+    
+    <h3>Imagenes:</h3>
+    <div class="gallery">
+      <% const images = film.Images || film.images || []; %>
+      <% if (images.length > 0) { %>
+        <% images.forEach((imgUrl) => { %>
+          <img src="<%= imgUrl %>" alt="Fotograma de <%= film.Title || film.title %>" onerror="this.style.display='none'">
+        <% }); %>
+      <% } else if (film.Poster || film.poster) { %>
+        <img src="<%= film.Poster || film.poster %>" alt="Póster de <%= film.Title || film.title %>">
+      <% } else { %>
+        <p>No hay imagenes disponibles para esta pelicula.</p>
+      <% } %>
+    </div>
+  </main>
+</body>
+</html>
